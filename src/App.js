@@ -1,25 +1,74 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react'
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import Counters from './components/counters'
+import Navbar from './components/navbar'
+export class App extends Component {
+  state = {
+    counters: [
+      {id: 0, value: 0},
+      {id: 1, value: 1},
+      {id: 2, value: 2},
+      {id: 3, value: 3},
+    ]
+  }
+  //  Delete
+  handleDelete = (id) => {
+    const counters = this.state.counters.filter(e => e.id !== id)
+    this.setState({counters})
+  }
+  //  Reset
+  handleReset = () => {
+    const counters = this.state.counters.map(e => {
+      e.value = 0;
+      return e;
+    })
+    this.setState({counters})
+  }
+  // Increment
+  incrementClicked = counter => {
+    const counters = [ ...this.state.counters ]
+    const index = counters.indexOf(counter)
+    counters[index] = { ...counter }
+    counters[index].value++;
+    this.setState({counters})
+  }
+  //  Decrement
+  decrementClicked = counter => {
+    const counters = [ ...this.state.counters ]
+    const index = counters.indexOf(counter)
+    counters[index] = { ...counter}
+    if(counters[index].value > 0) counters[index].value--;
+    this.setState({counters})
+  }
+  // Add
+  id = 4;
+  handleAdd = () => {
+    const newItem = {
+      id: this.id,
+      value: 0
+    }
+    this.id++;
+    const counters = this.state.counters;
+    this.setState({ counters: [...counters, newItem]})
+  }
+  render() {
+    return (
+      <React.Fragment>
+        <Navbar total={this.state.counters.filter( e => e.value > 0).length} />
+        <main className="container">
+          <Counters 
+            counters={this.state.counters}
+            incrementClicked={this.incrementClicked} 
+            decrementClicked={this.decrementClicked} 
+            handleDelete={this.handleDelete} 
+            handleReset={this.handleReset}
+            handleAdd={this.handleAdd}
+          />
+        </main>
+        
+      </React.Fragment>
+    );
+  }
 }
 
-export default App;
+export default App
