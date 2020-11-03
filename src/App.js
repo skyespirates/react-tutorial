@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import { BrowserRouter as Router, Route} from 'react-router-dom'
 
 import Counters from './components/counters'
 import Navbar from './components/navbar'
@@ -54,23 +53,19 @@ export class App extends Component {
   }
   render() {
     return (
-      <Router>
-        <Route exact path="/react-tutorial" render={props => (
-           <React.Fragment>
-           <Navbar total={this.state.counters.filter( e => e.value > 0).length} />
-           <main className="container">
-             <Counters 
-               counters={this.state.counters}
-               incrementClicked={this.incrementClicked} 
-               decrementClicked={this.decrementClicked} 
-               handleDelete={this.handleDelete} 
-               handleReset={this.handleReset}
-               handleAdd={this.handleAdd}
-             />
-           </main>   
-         </React.Fragment>
-        )} />
-      </Router>
+      <div>
+        <Navbar total={this.state.counters.filter( e => e.value > 0).length} />
+        <main className="container">
+          <Counters 
+            counters={this.state.counters}
+            incrementClicked={this.incrementClicked} 
+            decrementClicked={this.decrementClicked} 
+            handleDelete={this.handleDelete} 
+            handleReset={this.handleReset}
+            handleAdd={this.handleAdd}
+          />
+        </main>   
+      </div>
     );
   }
 }
