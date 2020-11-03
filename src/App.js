@@ -40,7 +40,7 @@ export class App extends Component {
     if(counters[index].value > 0) counters[index].value--;
     this.setState({counters})
   }
-  // Add
+  // Add item
   id = 4;
   handleAdd = () => {
     const newItem = {
